@@ -1,0 +1,70 @@
+:root
+{
+    --kenny-left: -90px;
+    --kenny-right: 0;
+    --kenny-top: 0;
+    --kenny-bottom: 0;
+}
+
+body
+{
+    margin: 0;
+
+}
+
+#container
+{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+.kenny-container
+{
+    position: absolute;
+    /*top: 0;*/
+    /*left: -90px; !* start on the right edge of the screen *!*/
+    left: var(--kenny-left);
+    right: var(--kenny-right);
+    top: var(--kenny-top);
+    bottom: var(--kenny-bottom);
+    width: 100px;
+    height: 100px;
+    animation: slide-in-out 6s infinite 1s;
+    animation-iteration-count: 1;
+}
+.kenny.img
+{
+    max-width: 100%;
+    cursor: pointer;
+}
+
+@keyframes slide-in-out
+{
+    20%
+    {
+        transform: translateX(calc(-150% + 257px));
+    }
+    /* slide out */
+    40%
+    {
+        transform: translateX(calc(80% - 257px));
+    }
+    /* slide in */
+
+    65%, 100%
+    {
+        transform: translateX(0);
+    }
+    /* pause */
+
+}
+
+/*@keyframes slide-in-out {*/
+/*    0%, 100% { transform: translateX(0); }*/
+/*    25% { transform: translateX(calc(-150% + 257px)); } !* slide out *!*/
+/*    45% { transform: translateX(calc(80% - 257px)); } !* slide in *!*/
+/*    65% { transform: translateX(0); } !* pause *!*/
+/*    100% { transform: translateX(0); }*/
+/*}*/

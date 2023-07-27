@@ -1,4 +1,15 @@
+const kennyElement = document.querySelector('.kenny');
+let moveKenny = true;
+let interval;
 document.addEventListener('DOMContentLoaded', function () {
+
+    if (moveKenny) {
+        createAndMoveKenny();
+    }
+
+});
+
+function createAndMoveKenny() {
 
     class Kenny {
         side;
@@ -11,21 +22,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-
-
-    // const containerWidth = containerElement.offsetWidth;
-    // const kennyWidth = kennyElement.offsetWidth;
-
     const directions = ['top', 'right', 'bottom', 'left'];
 
     function getRandomDirection() {
         const randomIndex = Math.floor(Math.random() * directions.length);
         return directions[randomIndex];
     }
-
-
-    const kennyElement = document.querySelector('.kenny');
     const container = document.querySelector('#container');
+
     let kennyImg = document.createElement('img');
     let kennyContainer = document.createElement('div');
     kennyContainer.classList.add('kenny-container');
@@ -33,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     kennyContainer.appendChild(kennyImg);
     // kennyContainer.style.transform = "rotate(-105deg)";
 
+    //addCharacter? > addKenny
     function addKenny() {
 
         let initSide = getRandomDirection();
@@ -67,10 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         `;
-
-            console.log(window.innerHeight);
-            // console.log(Math.floor(Math.random() * 100));
-            // console.log(Math.floor(Math.random() * 100) *10);
             kennyImg.style.transform = "rotate(310deg)";
             kennyContainer.style.left = '100%'; // start on the right edge of the screen
             kennyContainer.style.top = getRandomArbitrary(0, 90) + '%';
@@ -127,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         `;
+
+            kennyImg.style.transform = "rotate(0deg)";
             kennyContainer.style.left = getRandomArbitrary(0, 90) + '%';
             kennyContainer.style.top = '100%';
             // kennyContainer.style.bottom = '0';
@@ -135,56 +138,54 @@ document.addEventListener('DOMContentLoaded', function () {
         style.innerHTML = keyframes;
         document.head.appendChild(style);
 
-
-        // kennyContainer.style.margin = 'auto';
         kennyContainer.style.animationName = 'slide-in-out-' + initSide;
-
-            // if ($k.placement === 'top') {
-        //     kennyImg.style.top = '100px';
-        // } else if ($k.placement === 'bottom') {
-        //     kennyImg.style.bottom = '100px';
-        // }
         container.appendChild(kennyContainer);
     }
     kennyImg.addEventListener('animationend', function() {
         // Remove the element from the DOM
         container.parentNode.removeChild(kennyContainer);
     });
-    addKenny();
-    setInterval(addKenny, 10000);
-});
 
+    if (moveKenny) {
+        addKenny();
+        interval = setInterval(addKenny, 10000);
+    } else {
+        return;
+    }
+}
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
-// document.addEventListener('DOMContentLoaded', function () {
-//     const kennyElement = document.querySelector('.kenny');
-//     const containerElement = document.querySelector('#container');
-//     const containerWidth = containerElement.offsetWidth;
-//     const kennyWidth = kennyElement.offsetWidth;
-//
-//     const directions = ['top', 'right', 'bottom', 'left'];
-//
-//     function getRandomDirection() {
-//         const randomIndex = Math.floor(Math.random() * directions.length);
-//         return directions[randomIndex];
-//     }
-//
-//     const initSide = getRandomDirection();
-//     function randomInRange(min, max) {
-//         return Math.floor(Math.random() * (max - min + 1)) + min;
-//     }
-//
-//     function animateKenny() {
-//         console.log(initSide);
-//         const startLeft = randomInRange(-kennyWidth, containerWidth - kennyWidth);
-//         kennyElement.style.setProperty('--kenny-' + initSide, `${startLeft}px`);
-//
-//             //`${startLeft}px`;
-//     }
-//
-//     animateKenny();
-//     setInterval(animateKenny(), 10000); // Repeat every 14 seconds (same duration as animation)
-//
-// });
+
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('kenny')&& !event.target.classList.contains('dead')) {
+        moveKenny = false;
+        clearInterval(interval);
+        // event.preventDefault();
+        let kennyContainer = document.querySelector(".kenny-container");
+        // kennyContainer.style.animation = "none";
+        // kennyContainer.style.position = "fixed";
+        // kennyContainer.style.left = event.clientX + "px";
+        // kennyContainer.style.top = event.clientY + "px";
+        kennyContainer.style.animationPlayState = "paused";
+        const deadKenny = 'Alter-egos-dead-kenny.webp';
+        for (const child of kennyContainer.children) {
+            child.setAttribute('src', deadKenny);
+            child.classList.add('dead');
+        }
+        createStan();
+    }
+});
+
+function createStan(){
+    const container = document.querySelector('#container');
+
+    // function to set animation and side based on elem and container
+
+    let eel = document.createElement('h1');
+    eel.innerHTML = "tets";
+    container.appendChild(eel);
+}
+
+
